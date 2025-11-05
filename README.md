@@ -4,13 +4,12 @@ Este projeto tem como objetivo monitorar a vibração e a temperatura de um moto
 
 ---
 
-<<<<<<< HEAD
 to do: 
 [x] make connection with ESP32
 [] data analyze to make default curve for device (eletrical engine)
 [] calculors for confusion matrix
-[] create interface to show graphic in real time analyze
-=======
+[x] create interface to show graphic in real time analyze
+
 ## 🛠️ Para Começar
 
 ### Requisitos
@@ -41,4 +40,3 @@ to do:
 ## 🔗 Referências
 - [**Documentação da nuvem Arduino para ESP32:** Guia para integrar o ESP32 com a plataforma Arduino Cloud. ](https://docs.arduino.cc/arduino-cloud/guides/esp32/)
 - [**Código de teste MPU6050:** Exemplo de código para testar o sensor MPU6050 no fórum do Arduino. ](https://forum.arduino.cc/t/simplest-test-code-for-mpu6050/1250345)
->>>>>>> f7a3aa298d8860d36ccbf6a34391978cb8f94d3e
