@@ -4,11 +4,11 @@ Este projeto tem como objetivo monitorar a vibração e a temperatura de um moto
 
 ---
 
-to do: 
-[x] make connection with ESP32
-[] data analyze to make default curve for device (eletrical engine)
-[] calculors for confusion matrix
-[x] create interface to show graphic in real time analyze
+### to do: 
+- [x] make connection with ESP32
+- [] data analyze to make default curve for device (eletrical engine)
+- [] calculors for confusion matrix
+- [x] create interface to show graphic in real time analyze
 
 ## 🛠️ Para Começar
 
