@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react'; // Remove ChangeEvent (não precisamos mais dos checkboxes)
+import { useState, useEffect, useRef } from 'react';
 import { Line, Bar } from 'react-chartjs-2'; 
 import {
   Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler, BarElement 
@@ -8,10 +8,9 @@ import {
 
 ChartJS.register( CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler, BarElement );
 
-const ESP32_IP = '192.168.1.19';
-// ------------------------------------
+const ESP32_IP = '192.168.1.5';
 const ESP32_WS_URL = `ws://${ESP32_IP}/ws`;
-const MAX_DATA_POINTS = 50; // Aumentamos os pontos, já que os dados chegam 10x mais rápido
+const MAX_DATA_POINTS = 50; 
 
 function formatRuntime(totalSeconds: number): string {
   const hours = Math.floor(totalSeconds / 3600);
@@ -20,31 +19,24 @@ function formatRuntime(totalSeconds: number): string {
 }
 
 export default function Home() {
-  // (Removemos o estado 'visibleGraphs')
 
-  // Estados dos gráficos de linha
   const [vibrationDataX, setVibrationDataX] = useState<number[]>([]);
   const [vibrationDataY, setVibrationDataY] = useState<number[]>([]);
   const [vibrationDataZ, setVibrationDataZ] = useState<number[]>([]);
   const [labels, setLabels] = useState<string[]>([]);
   const [currentTemp, setCurrentTemp] = useState<number>(0);
 
-  // Estados da FFT
   const [fftFreqs, setFftFreqs] = useState<string[]>([]); 
   const [fftMags, setFftMags] = useState<number[]>([]); 
   
-  // Estado do Runtime
   const [runtimeString, setRuntimeString] = useState<string>("0 h 0 min");
   
-  // Estado da Conexão
   const [isConnected, setIsConnected] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const ws = useRef<WebSocket | null>(null);
 
-  // --- O NOVO CORAÇÃO DA APLICAÇÃO: HOOK ÚNICO DE WEBSOCKET ---
   useEffect(() => {
-    // Função para conectar
     const connect = () => {
       ws.current = new WebSocket(ESP32_WS_URL);
       console.log("Tentando conectar ao WebSocket...");
@@ -59,24 +51,21 @@ export default function Home() {
         console.log("WebSocket Desconectado. Tentando reconectar em 3s...");
         setIsConnected(false);
         setError("Desconectado. Tentando reconectar...");
-        // Tenta reconectar após 3 segundos
         setTimeout(connect, 3000); 
       };
 
       ws.current.onerror = (err) => {
         console.error("Erro no WebSocket:", err);
         setError("Erro de conexao. Verifique o IP e a rede.");
-        ws.current?.close(); // Força o onclose para tentar reconectar
+        ws.current?.close();
       };
 
-      // O "OUVINTE" DE MENSAGENS
       ws.current.onmessage = (event) => {
         const data = JSON.parse(event.data);
 
-        // Separa os dados com base no "tipo"
         switch (data.type) {
           
-          case "axes": // Atualização rápida (10x por segundo)
+          case "axes":
             const currentTime = new Date().toLocaleTimeString();
             setVibrationDataX((prev) => { const n = [...prev, data.ax]; if (n.length > MAX_DATA_POINTS) n.shift(); return n; });
             setVibrationDataY((prev) => { const n = [...prev, data.ay]; if (n.length > MAX_DATA_POINTS) n.shift(); return n; });
@@ -85,22 +74,21 @@ export default function Home() {
             setCurrentTemp(data.temp);
             break;
             
-          case "fft": // Atualização da FFT (a cada 2 segundos)
+          case "fft":
             const formattedFreqs = data.freqs.map((f: number) => f.toFixed(1)); 
             setFftFreqs(formattedFreqs);
             setFftMags(data.mags);
             break;
             
-          case "runtime": // Atualização do runtime (a cada 10 segundos)
+          case "runtime":
             setRuntimeString(formatRuntime(data.seconds));
             break;
         }
       };
     };
 
-    connect(); // Chama a função de conexão
+    connect();
 
-    // Função de limpeza (quando o componente desmontar)
     return () => {
       ws.current?.close();
     };
@@ -142,12 +130,8 @@ export default function Home() {
         </div>
       </div>
       
-      {/* --- PAINEL DE CONTROLE REMOVIDO --- */}
-      {/* (Removemos os checkboxes) */}
-      
-      <div className="grid grid-cols-1 gap-8 w-full max-w-6xl"> {/* <-- MUDADO DE lg:grid-cols-3 PARA grid-cols-1 */}
+      <div className="grid grid-cols-1 gap-8 w-full max-w-6xl">
         
-        {/* Gráfico X */}
         <div className="bg-white p-4 rounded-lg shadow-md border border-amber-200">
           <h2 className="text-2xl font-semibold text-center mb-2" style={{color: '#8D6E63'}}>Eixo X</h2>
           <div className="h-64">
@@ -155,7 +139,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Gráfico Y */}
         <div className="bg-white p-4 rounded-lg shadow-md border border-amber-200">
           <h2 className="text-2xl font-semibold text-center mb-2" style={{color: '#BCAAA4'}}>Eixo Y</h2>
           <div className="h-64">
@@ -163,7 +146,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Gráfico Z */}
         <div className="bg-white p-4 rounded-lg shadow-md border border-amber-200">
           <h2 className="text-2xl font-semibold text-center mb-2" style={{color: '#5D4037'}}>Eixo Z</h2>
           <div className="h-64">
