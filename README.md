@@ -6,14 +6,14 @@ Este projeto tem como objetivo monitorar sistemas que tenham constância em vibr
 
 ### to do: 
 - [x] fazer conexão com ESP32
-- [] analize de dados para criar curva padrão para dispositivo
-- [] implementar matriz da confusão
+- [ ] analize de dados para criar curva padrão para dispositivo
+- [ ] implementar matriz da confusão
 - [x] criar interface para visualizar em tempo real
 - [x] fazer conexão via websocket
 - [x] colocar termometro
 - [x] mostrar picos de amplitudes
-- [] estimar a quantidade de horas que o sistema trabalha
-- [] transformar em uma arquitetura distribuída
+- [ ] estimar a quantidade de horas que o sistema trabalha
+- [ ] transformar em uma arquitetura distribuída
 
 ## 🛠️ Para Começar
 
