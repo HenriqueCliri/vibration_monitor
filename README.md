@@ -1,14 +1,19 @@
 ### VIBRATION AND TEMPERATURE MONITOR
 
-Este projeto tem como objetivo monitorar a vibração e a temperatura de um motor elétrico em tempo real para detectar anomalias e prever falhas.
+Este projeto tem como objetivo monitorar sistemas que tenham constância em vibração (podendo ser motores) em tempo real para detectar anomalias e prever falhas.
 
 ---
 
 ### to do: 
-- [x] make connection with ESP32
-- [] data analyze to make default curve for device (eletrical engine)
-- [] calculors for confusion matrix
-- [x] create interface to show graphic in real time analyze
+- [x] fazer conexão com ESP32
+- [] analize de dados para criar curva padrão para dispositivo
+- [] implementar matriz da confusão
+- [x] criar interface para visualizar em tempo real
+- [x] fazer conexão via websocket
+- [x] colocar termometro
+- [x] mostrar picos de amplitudes
+- [] estimar a quantidade de horas que o sistema trabalha
+- [] transformar em uma arquitetura distribuída
 
 ## 🛠️ Para Começar
 
@@ -17,11 +22,11 @@ Este projeto tem como objetivo monitorar a vibração e a temperatura de um moto
 - **Hardware:**
     - ESP32
     - Sensor de Vibração (ex: MPU6050)
-    - Sensor de Temperatura (ex: DS18B20 ou DHT22)
     - Motor Elétrico (a ser monitorado)
 
 - **Software:**
-    - IDE Arduino
+    - VS code
+    - PlatformIO
 
 ---
 
